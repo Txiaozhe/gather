@@ -10,3 +10,6 @@
 * gather
 * helper
 * scripts
+
+# architecture
+![](./architecture.png)
