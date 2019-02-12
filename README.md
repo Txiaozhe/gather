@@ -1,2 +1,12 @@
-# gather
-Live data fetch for all platforms.
+# Requires
+> node v8+
+
+# Install
+> npm i
+
+# Introduction
+
+* danmu
+* gather
+* helper
+* scripts

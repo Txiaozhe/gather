@@ -1,0 +1,345 @@
+syntax = "proto2";
+
+package linkerProtocol;
+option java_package = "la.shanggou.live.proto.gateway";
+
+// 用户个人信息
+message User {
+    required int32 uid = 1; // 用户ID
+    optional int32 gender = 2; // 性别
+    optional int32 verified = 3; // 验证
+    optional int32 exp = 4; // 经验
+    optional int32 level = 5; // 等级
+    optional int32 authed = 6; // 认证信息
+    optional int32 status = 7; // 用户账号状态
+    optional string nickname = 8; // 昵称
+    optional int32 guard = 9; // 全平台勋章
+    optional int32 rider = 10; // 坐骑
+    optional string portrait = 11; // 头像
+}
+
+// 房间信息
+message LiveData {
+    required int32 online = 1; // 房间在线人数
+    required int32 starlight = 2; // 星光
+    required int32 fight = 3; // 战斗力
+    required int32 status = 4; // 房间状态 '0,停播 -1禁播, 1准备中, 2推流中 ',
+    optional int32 views = 5; // 观看次数
+    optional int32 duration = 6; // 播放时长
+    optional int32 maxOnline = 7; // 最大观众人数
+}
+
+// 用户房间内个人成就
+message RoomAttr {
+    required uint32 priv = 1; // 房间内特权
+    optional int32 guard = 2; // 基于主播获取的勋章
+}
+
+// 滞留属性
+message RetetionAttr {
+    required int32 aliveTime = 1; // 存活时间
+    required int32 nowTime = 2; // 当前时间
+    required int32 startTime = 3; // 开始时间
+    optional int32 id = 4; // 滞留属性的ID
+}
+
+// 登录服务器请求 "Gateway.Login.Req"
+message LoginReq {
+    required int32 uid = 1; // 用户ID
+    required string pwd = 2; // passwd    token
+    required string devid = 3; // 设备ID
+    required string app = 4; // 平台类型，如iOS/Android/PC
+    required int64 rt = 5; // 当前的客户端时间
+    required string vk = 6; // 校验码  uid+rt+pwd
+    required string ver = 7; // 客户端版本
+    required string channel = 8; // 应用渠道，对于Android有用，如360，百度，推广包等
+}
+
+// 登录服务器响应 "Gateway.Login.Resp"
+message LoginResp {
+    required int32 status = 1; // 登录状态，非零为异常
+    optional int32 uid = 2; // 如果是游客，系统分配的id
+}
+
+// 加入房间请求 "Gateway.RoomJoin.Req"
+message RoomJoinReq {
+    required int32 owid = 1; // owner ID
+}
+
+// 加入房间响应 "Gateway.RoomJoin.Resp"
+message RoomJoinResp {
+    required int32 owid = 1; // owner ID
+    required int32 code = 2; // 状态码，非0表示进入房间失败
+    optional RoomAttr roomAttr = 3; //
+    optional LiveData liveData = 4;
+    repeated int32 optionalTextColors = 5;//用户在房间内可以使用的文本颜色
+}
+
+// 延迟2s发送的加入房间广播 "Gateway.RoomJoin.Up"
+message RoomJoinNotifyUp {
+    required int32 owid = 1; // 房间ID
+}
+
+// 新加入房间事件 "Gateway.RoomJoin.Notify"
+message RoomJoinNotify {
+    required int32 owid = 1; // owner ID，类似于Host ID
+    required RoomAttr roomAttr = 2;
+    required User user = 3;
+}
+
+// 离开房间 "Gateway.RoomLeave.Up"
+message RoomLeaveReq {
+    required int32 owid = 1; // owner ID
+}
+
+// 聊天上行消息 "Gateway.Chat.Up"
+message ChatUp {
+    required int32 type = 1; // 消息类型：0 普通消息 1 收费弹幕 
+    required string txt = 2;
+    repeated User toUsers = 3; // 被@的人
+    optional int32 color = 4;
+}
+
+// 聊天下行消息 "Gateway.Chat.Notify"
+message ChatNotify {
+    required int32 owid = 1; // owner ID
+    required RoomAttr roomAttr = 2;
+    required User user = 3;
+    required int32 type = 4; // 消息类型：0 普通消息 1 收费弹幕 1001 系统通知
+    required string txt = 5; // 消息文本
+    optional int32 color = 6; // 消息颜色
+    repeated User toUsers = 7; // 被@的人
+    optional RetetionAttr retetionAttr = 8;
+    optional string platForm = 9; //平台类型(发送端登陆时的App字段)，如iOS/Android/PC
+}
+
+// 送礼上行 "Gateway.Gift.Up"
+message GiftUp {
+    required int32 owid = 1; // owner ID
+    required int32 gid = 2; // 礼物模板ID
+    optional int32 attrId = 3; // 礼物ID
+    optional int32 count = 4; // 礼物数量
+    optional string txt = 5; // 文本
+    optional string ext = 6; // 扩展字段
+}
+
+// 送礼下行 "Gateway.Gift.Notify"
+message GiftNotify {
+    required int32 owid = 1; // owner ID
+    required RoomAttr roomAttr = 2; // 送礼人房间内成就
+    required User user = 3; // 送礼人信息
+    required int32 combo = 4; // 连击送礼的连击次数
+    required int32 comboId = 5; // 标识每个连击消息的ID
+    required int32 gid = 6; // 礼物模板ID
+    optional int32 attrId = 7; // 礼物ID
+    optional int32 count = 8; // 礼物数量
+    optional RetetionAttr retetionAttr = 9; // 礼物滞留属性
+}
+
+//	点赞上行 "Gateway.Zan.Up"
+message ZanUp {
+    required int32 owid = 1;
+    required int32 color = 2; // 点赞的颜色
+}
+
+// 点赞下行 "Gateway.Zan.Notify"
+message ZanNotify {
+    required int32 owid = 1;
+    required RoomAttr roomAttr = 2;
+    required User user = 3;
+    required int32 color = 4; // 点赞的颜色
+}
+
+// 管理事件通知 (上行走http) "Gateway.Manager.Notify"
+message ManagerNotify {
+    required int32 owid = 1;
+    required RoomAttr roomAttr = 2;
+    required User user = 3;
+    required int32 status = 4; //1禁止进入 -1解除禁入 2禁止发言 -2解除禁言 4设为管理员 -4解除管理员 8设为房主
+}
+
+// 通知房间守护变更 "Gateway.Guard.Notify"
+message RoomGuardNotify {
+    required int32 owid = 1;
+    required RoomAttr roomAttr = 2;
+    required int32 uid = 3;
+}
+
+
+// 房间更新信息通知 "Gateway.RoomUpdate.Notify"
+message RoomUpdateNotify {
+    required int32 owid = 1;
+    required LiveData liveData = 2; // 当前房间信息
+}
+
+//主播暂离 (上行走http) "Gateway.AnchorLiveStatus.Notify"
+message AnchorLiveStatusNotify {
+    required int32 owid = 1;
+    required int32 type = 2; //	1 暂离, 2 回来
+}
+
+// 房间分享 (上行走http) "Gateway.Shared.Notify"
+message SharedNotify {
+    required int32 owid = 1;
+    required RoomAttr roomAttr = 2;
+    required User user = 3;
+    required string type = 4; // 分享平台，如微信，QQ
+    required string tips = 5; // 提示信息
+}
+
+// 关注 (上行走http) "Gateway.Followed.Notify"
+message FollowedNotify {
+    required int32 owid = 1;
+    required RoomAttr roomAttr = 2;
+    required User user = 3;
+    required string tips = 4; // 提示信息
+}
+
+// 红包通知（新增了合体宝箱，星秀和showing不处理?）"Gateway.RedEnvelope.Notify"
+message RedEnvelopeNotify {
+    required int32 owid = 1;
+    required RoomAttr roomAttr = 2;
+    required User user = 3;
+    required int32 rid = 4; // 红包ID
+    required int32 type = 5; // 1 牛币红包 2 合体宝箱 3 牛币宝箱
+    required int32 amount = 6; // 红包金额
+    optional string txt = 7; // 红包附件信息
+    optional RetetionAttr retetionAttr = 8;
+    required uint32 key = 9; // 用于抢红包校验的key
+}
+
+// 用户属性更新通知 "Gateway.UserAttr.Notify"
+message UserAttrNotify {
+    required User user = 1;
+    required int32 diamond = 2; // 个人财富钻石
+    required int32 starlight = 3; // 获得的星光
+    required int32 fight = 4; // 战斗力
+    optional int32 seed = 5; // 种子
+}
+
+// 等级更新提醒 "Gateway.UserLevelUp.Notify"
+message UserLevelUpNotify {
+    required int32 owid = 1;
+    required RoomAttr roomAttr = 2;
+    required User user = 3;
+    required int32 nextLevel = 4;
+    required int32 needDiamod = 5;
+    required int32 percent = 6;
+    required int32 type = 7;
+    optional string tips = 8;
+}
+
+// 踢出登录通知 "Gateway.Kickout.Notify"
+message KickoutNotify {
+    required int32 owid = 1;
+    optional string msg = 2;
+}
+
+// 申请连麦 "Gateway.Link.Apply"
+message LinkApply {
+    required int32 owid = 1;
+    required int32 uid = 2;
+    required int32 applyCount = 3;
+}
+
+// 取消连麦 "Gateway.Link.Cancel"
+message LinkCancel {
+    required int32 owid = 1;
+    required int32 uid = 2;
+    required int32 applyCount = 3;
+}
+
+// 关闭连麦 "Gateway.Link.Close"
+message LinkClose {
+    required int32 owid = 1;
+    required int32 applyCount = 2;
+}
+
+// 连麦广播下行 "Gateway.Link.Notify"
+message LinkNotify {
+    required int32 owid = 1;
+    required int32 applyCount = 2;
+}
+
+// 接受连麦 "Gateway.Link.Accept"
+message LinkAccept {
+    required int32 owid = 1;
+    required string roomName = 2;
+    required string token = 3;
+}
+
+// 连麦广播 "Gateway.Link.Broadcast"
+message LinkBroadcast {
+    required int32 owid = 1;
+    required int32 status = 2;
+    repeated User linkers = 3;
+}
+
+// 横幅广播 "Gateway.Banner.Notify"
+message BannerNotify
+{
+    required int32 owid = 1;  
+    required User user = 2;
+    required User anchor = 3;
+    required int32 templateId = 4;
+    required int32 gid = 5;
+    required int32 attrId = 6;
+    required int32 giftCount = 7;  
+    optional string txt = 8;
+}
+
+//官方房间状态通知 "Gateway.OfficialLiveStatus.Notify"
+message OfficialLiveStatusNotify
+{
+    required int32 owid = 1;//公共房间号
+    repeated User  anchorList = 2;//主播列表数据
+    optional User  currentAnchor = 3;//正在直播中的主播
+}
+
+// 官方房间Like赞、踩上行"Gateway.OfficalRoomGift.Send"
+message OfficialLiveLikeUp
+{
+    required int32 owid = 1; // owner ID
+    required int32 action = 2; // 1 赞， 2 踩
+}
+
+//官方房间Like变更通知 "Gateway.OfficialLiveLive.Notify"
+message OfficialLiveLikeNotify
+{
+    required int32 owid = 1;//公共房间号    
+    required int32 remainingTime = 2;//以秒计算的剩余时间,更新时下发   
+    required int32 like = 3;//赞数量
+    required int32 unlike = 4;//踩数量
+}
+
+// 通知官方直播间的用户跳转房间"Gateway.OfficialLiveNavigation.Change"
+message OfficialLiveNavigationChange
+{
+    required int32 srcOwid = 1; // 源房间号
+    required int32 destOwid = 2; // 目的房间号
+    required string streamUrl = 3; // 目的房间的视频流地址
+}
+
+// 通知主播是否重新推流 "Gateway.AnchorIndicate.Notify"
+// 通知官方直播间主播开关播 "Gateway.AnchorReady.Notify"
+message AnchorIndicateNotify
+{
+    required int32 action = 1; // 1 重推 2 指示主播关播
+    optional string txt = 2; //提示文本(关播原因blablabla)
+}
+
+// 全局的广播信息"Gateway.GlobalMsg.Notify"
+message GlobalMsg
+{
+    required int32 type = 1; // 消息类型
+    repeated Ext ext = 2;  // 额外信息
+}
+
+message Ext 
+{
+    optional User user = 1 ; // 关联的用户信息在users中的下标
+    optional string txt  = 2 ;
+    optional int32 color = 3 ;
+}
+
+

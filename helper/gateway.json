@@ -1,0 +1,150 @@
+{
+  "303215245": {
+    "protocol": "Gateway.Shared.Notify",
+    "msgType": "linkerProtocol.SharedNotify"
+  },
+  "479781885": {
+    "protocol": "Gateway.Gift.Notify",
+    "msgType": "linkerProtocol.GiftNotify"
+  },
+  "508840654": {
+    "protocol": "Gateway.RoomJoin.Resp",
+    "msgType": "linkerProtocol.RoomJoinResp"
+  },
+  "570090790": {
+    "protocol": "Gateway.Link.Notify",
+    "msgType": "linkerProtocol.LinkNotify"
+  },
+  "586698102": {
+    "protocol": "Gateway.Manager.Notify",
+    "msgType": "linkerProtocol.ManagerNotify"
+  },
+  "617685563": {
+    "protocol": "Gateway.Zan.Up",
+    "msgType": "linkerProtocol.ZanUp"
+  },
+  "669161096": {
+    "protocol": "Gateway.Chat.Notify",
+    "msgType": "linkerProtocol.ChatNotify"
+  },
+  "676536667": {
+    "protocol": "Gateway.RoomJoin.Notify",
+    "msgType": "linkerProtocol.RoomJoinNotify"
+  },
+  "697088987": {
+    "protocol": "Gateway.OfficialLiveStatus.Notify",
+    "msgType": "linkerProtocol.OfficialLiveStatusNotify"
+  },
+  "-194078186": {
+    "protocol": "Gateway.RoomUpdate.Notify",
+    "msgType": "linkerProtocol.RoomUpdateNotify"
+  },
+  "825420722": {
+    "protocol": "Gateway.UserAttr.Notify",
+    "msgType": "linkerProtocol.UserAttrNotify"
+  },
+  "934367122": {
+    "protocol": "Gateway.AnchorReady.Notify",
+    "msgType": "linkerProtocol.AnchorReadyNotify"
+  },
+  "1009213983": {
+    "protocol": "Gateway.Link.Apply",
+    "msgType": "linkerProtocol.LinkApply"
+  },
+  "1150328117": {
+    "protocol": "Gateway.GlobalMsg.Notify",
+    "msgType": "linkerProtocol.GlobalMsg"
+  },
+  "1301742417": {
+    "protocol": "Gateway.RedEnvelope.Notify",
+    "msgType": "linkerProtocol.RedEnvelopeNotify"
+  },
+  "1452789148": {
+    "protocol": "Gateway.Link.Cancel",
+    "msgType": "linkerProtocol.LinkCancel"
+  },
+  "1629484155": {
+    "protocol": "Gateway.Login.Req",
+    "msgType": "linkerProtocol.LoginReq"
+  },
+  "1793833185": {
+    "protocol": "Gateway.Link.Broadcast",
+    "msgType": "linkerProtocol.LinkBroadcast"
+  },
+  "1893073187": {
+    "protocol": "Gateway.Chat.Up",
+    "msgType": "linkerProtocol.ChatUp"
+  },
+  "1952773763": {
+    "protocol": "Gateway.Followed.Notify",
+    "msgType": "linkerProtocol.FollowedNotify"
+  },
+  "2005355379": {
+    "protocol": "Gateway.Login.Resp",
+    "msgType": "linkerProtocol.LoginResp"
+  },
+  "-1260603416": {
+    "protocol": "Gateway.RoomJoin.Req",
+    "msgType": "linkerProtocol.RoomJoinReq"
+  },
+  "-83894905": {
+    "protocol": "Gateway.RoomJoin.Up",
+    "msgType": "linkerProtocol.RoomJoinNotifyUp"
+  },
+  "-742394014": {
+    "protocol": "Gateway.RoomLeave.Up",
+    "msgType": "linkerProtocol.RoomLeaveReq"
+  },
+  "-35313019": {
+    "protocol": "Gateway.Gift.Up",
+    "msgType": "linkerProtocol.GiftUp"
+  },
+  "-1425862037": {
+    "protocol": "Gateway.Zan.Notify",
+    "msgType": "linkerProtocol.ZanNotify"
+  },
+  "-2118180727": {
+    "protocol": "Gateway.Guard.Notify",
+    "msgType": "linkerProtocol.RoomGuardNotify"
+  },
+  "-358042289": {
+    "protocol": "Gateway.AnchorLiveStatus.Notify",
+    "msgType": "linkerProtocol.AnchorLiveStatusNotify"
+  },
+  "-686543790": {
+    "protocol": "Gateway.UserLevelUp.Notify",
+    "msgType": "linkerProtocol.UserLevelUpNotify"
+  },
+  "-2059302971": {
+    "protocol": "Gateway.Kickout.Notify",
+    "msgType": "linkerProtocol.KickoutNotify"
+  },
+  "-1844875324": {
+    "protocol": "Gateway.Link.Close",
+    "msgType": "linkerProtocol.LinkClose"
+  },
+  "-1281235494": {
+    "protocol": "Gateway.Link.Accept",
+    "msgType": "linkerProtocol.LinkAccept"
+  },
+  "-225158577": {
+    "protocol": "Gateway.Banner.Notify",
+    "msgType": "linkerProtocol.BannerNotify"
+  },
+  "-2068322255": {
+    "protocol": "Gateway.OfficalRoomGift.Send",
+    "msgType": "linkerProtocol.OfficialLiveLikeUp"
+  },
+  "-2020231711": {
+    "protocol": "Gateway.OfficialLiveLive.Notify",
+    "msgType": "linkerProtocol.OfficialLiveLiveNotify"
+  },
+  "-397601416": {
+    "protocol": "Gateway.OfficialLiveNavigation.Change",
+    "msgType": "linkerProtocol.OfficialLiveNavigationChange"
+  },
+  "-1438216223": {
+    "protocol": "Gateway.AnchorIndicate.Notify",
+    "msgType": "linkerProtocol.AnchorIndicateNotify"
+  }
+}
