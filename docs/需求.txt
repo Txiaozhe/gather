@@ -1,0 +1,20 @@
+1.scan：http消息获取;
+	1.在线主播房间列表 √
+	2.人气 粉丝        ×
+	3.平台主播key      ×
+2.dispatch:调度服务
+	1.scan消息接收/与bee连接 消息传递 √
+	2.房间状态管理,任务派发，负载均衡 √
+	3.集群机器状态监控，动态伸缩     ×
+3.bee:采集机器
+	1.任务接收                        √
+	2.平台监听执行					  √
+	3.异常上报						  √
+	4.状态心跳						  ×
+
+	
+链接方式
+scan(http)->dispatch(tcp)<->bees；
+bee(log)->loghub
+bee(es client)->es
+loghub（投递）->odps;
